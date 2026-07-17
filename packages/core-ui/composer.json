@@ -1,0 +1,21 @@
+{
+    "name": "likeplatform/core-ui",
+    "description": "Shared UI shell (layouts, AppSwitcher, design tokens) for the LikePlatform Hub & Spoke ecosystem.",
+    "type": "library",
+    "license": "proprietary",
+    "autoload": {
+        "psr-4": {
+            "CoreUi\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "CoreUi\\CoreUiServiceProvider"
+            ]
+        }
+    },
+    "require": {
+        "php": "^8.3"
+    }
+}

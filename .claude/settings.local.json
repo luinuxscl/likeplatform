@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//tmp/agent-skills-source/**)",
+      "Read(//tmp/agent-skills-source/skills/**)",
+      "mcp__laravel-boost__search-docs"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "laravel-boost"
+  ]
+}
