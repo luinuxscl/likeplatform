@@ -36,6 +36,7 @@ Cada Spoke se protege con middleware de contexto (`EnsureTenantContext`, `Ensure
 | **Build** | Vite 8 · laravel-vite-plugin |
 | **Auth** | Passkeys · 2FA · email verification |
 | **Permisos** | Spatie Laravel Permission (scoped por tenant) |
+| **Billing** | Laravel Cashier (Stripe) · CLP · IVA 19% |
 | **Base de datos** | SQLite (dev) · compatible con MySQL/PostgreSQL |
 | **Testing** | Pest 4 · Larastan 3 · Pint |
 | **Tooling** | Laravel Boost · Pail · Chisel · Blaze |
@@ -69,6 +70,8 @@ User ──BelongsToMany── Tenant ──HasMany── Document
 - Composer 2
 - Node.js 20+
 - SQLite (viene preconfigurado para desarrollo local)
+- (Opcional) [Stripe CLI](https://docs.stripe.com/stripe-cli) — para escuchar webhooks en local
+- (Opcional) `ext-bcmath` — requerida por Laravel Cashier para cálculos monetarios
 
 ---
 
@@ -186,6 +189,27 @@ php artisan test --compact
 4. Definí las rutas en `routes/{spoke}.php`
 5. Agregá los permisos en `RoleSeeder`
 6. Escribí los tests
+
+---
+
+## Variables de entorno (Stripe / Cashier)
+
+Para habilitar el flujo de cobros, definí estas variables en `.env` (modo `test` de Stripe):
+
+```ini
+STRIPE_KEY=pk_test_xxx
+STRIPE_SECRET=sk_test_xxx
+STRIPE_WEBHOOK_SECRET=whsec_xxx          # lo entrega `stripe listen` en dev
+CASHIER_CURRENCY=clp
+CASHIER_CURRENCY_LOCALE=es_CL
+CASHIER_PATH=stripe
+```
+
+Para escuchar webhooks en local:
+
+```bash
+stripe listen --forward-to localhost:8000/stripe/webhook
+```
 
 ---
 

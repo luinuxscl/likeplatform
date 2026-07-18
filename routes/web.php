@@ -1,8 +1,13 @@
 <?php
 
+use App\Http\Controllers\Webhooks\StripeWebhookController;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome')->name('home');
+
+// Stripe webhooks — excluidas de CSRF en bootstrap/app.php
+Route::post('stripe/webhook', StripeWebhookController::class)
+    ->name('cashier.webhook');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::view('dashboard', 'dashboard')->name('dashboard');

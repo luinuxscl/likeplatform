@@ -17,11 +17,13 @@ use Illuminate\Support\Carbon;
  * @property int|null $price_cents
  * @property array<int, string>|null $features
  * @property int $sort_order
+ * @property string|null $stripe_product_id
+ * @property string|null $stripe_price_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property-read Spoke $spoke
+ * @property-read Spoke|null $spoke
  */
-#[Fillable(['spoke_id', 'name', 'slug', 'price_cents', 'features', 'sort_order'])]
+#[Fillable(['spoke_id', 'name', 'slug', 'price_cents', 'features', 'sort_order', 'stripe_product_id', 'stripe_price_id'])]
 class SpokePlan extends Model
 {
     /** @use HasFactory<SpokePlanFactory> */

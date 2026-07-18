@@ -18,6 +18,10 @@ return Application::configure(basePath: dirname(__DIR__))
             'spoke.access' => EnsureSpokeAccess::class,
             'tenant.context' => EnsureTenantContext::class,
         ]);
+
+        $middleware->validateCsrfTokens(except: [
+            'stripe/webhook',
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(

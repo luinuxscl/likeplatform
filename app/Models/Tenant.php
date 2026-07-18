@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
+use Laravel\Cashier\Billable;
 
 /**
  * @property int $id
@@ -18,6 +19,10 @@ use Illuminate\Support\Carbon;
  * @property string $slug
  * @property bool $is_active
  * @property bool $is_suspended
+ * @property string|null $stripe_id
+ * @property string|null $pm_type
+ * @property string|null $pm_last_four
+ * @property Carbon|null $trial_ends_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property-read Collection<int, User> $users
@@ -28,8 +33,24 @@ use Illuminate\Support\Carbon;
 #[Fillable(['name', 'slug'])]
 class Tenant extends Model
 {
+    use Billable;
+
     /** @use HasFactory<TenantFactory> */
     use HasFactory;
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'is_active' => 'boolean',
+            'is_suspended' => 'boolean',
+            'trial_ends_at' => 'datetime',
+        ];
+    }
 
     /**
      * The users that belong to this tenant.
